@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-return array(
+return [
     'year' => ':count år|:count år',
     'y' => ':count år|:count år',
     'month' => ':count måned|:count måneder',
@@ -33,4 +33,33 @@ return array(
     'diff_tomorrow' => 'i morgen',
     'diff_before_yesterday' => 'i forgårs',
     'diff_after_tomorrow' => 'i overmorgen',
-);
+    'period_recurrences' => 'en gang|:count ganger',
+    'period_interval' => 'hver :interval',
+    'period_start_date' => 'fra :date',
+    'period_end_date' => 'til :date',
+    'months' => ['januar', 'februar', 'mars', 'april', 'mai', 'juni', 'juli', 'august', 'september', 'oktober', 'november', 'desember'],
+    'months_short' => ['jan', 'feb', 'mar', 'apr', 'mai', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'des'],
+    'weekdays' => ['søndag', 'mandag', 'tirsdag', 'onsdag', 'torsdag', 'fredag', 'lørdag'],
+    'weekdays_short' => ['søn', 'man', 'tir', 'ons', 'tor', 'fre', 'lør'],
+    'weekdays_min' => ['sø', 'ma', 'ti', 'on', 'to', 'fr', 'lø'],
+    'ordinal' => ':number.',
+    'first_day_of_week' => 1,
+    'day_of_first_week_of_year' => 4,
+    'formats' => [
+        'LT' => 'HH:mm',
+        'LTS' => 'HH:mm:ss',
+        'L' => 'DD.MM.YYYY',
+        'LL' => 'D. MMMM YYYY',
+        'LLL' => 'D. MMMM YYYY HH:mm',
+        'LLLL' => 'dddd, D. MMMM YYYY [kl.] HH:mm',
+    ],
+    'calendar' => [
+        'sameDay' => '[i dag kl.] LT',
+        'nextDay' => '[i morgen kl.] LT',
+        'nextWeek' => 'på dddd [kl.] LT',
+        'lastDay' => '[i går kl.] LT',
+        'lastWeek' => '[i] dddd[s kl.] LT',
+        'sameElse' => 'L',
+    ],
+    'list' => [', ', ' og '],
+];

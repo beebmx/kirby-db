@@ -4,7 +4,7 @@
     "keywords": [
         "kirby", "kirby-3", "database", "model", "eloquent"
     ],
-    "version": "1.0.0",
+    "version": "1.0.1",
     "type": "kirby-plugin",
     "license": "MIT",
     "authors": [
@@ -14,10 +14,11 @@
         }
     ],
     "require": {
+        "php": "^7.1.3",
         "composer/installers": "~1.0"
     },
     "require-dev": {
-        "illuminate/database": "5.5.*"
+        "illuminate/database": "^5.7"
     },
     "config": {
         "optimize-autoloader": true,

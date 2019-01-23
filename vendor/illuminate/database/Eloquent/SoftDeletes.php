@@ -22,6 +22,16 @@ trait SoftDeletes
     }
 
     /**
+     * Initialize the soft deleting trait for an instance.
+     *
+     * @return void
+     */
+    public function initializeSoftDeletes()
+    {
+        $this->dates[] = $this->getDeletedAtColumn();
+    }
+
+    /**
      * Force a hard delete on a soft deleted model.
      *
      * @return bool|null
@@ -30,11 +40,13 @@ trait SoftDeletes
     {
         $this->forceDeleting = true;
 
-        $deleted = $this->delete();
+        return tap($this->delete(), function ($deleted) {
+            $this->forceDeleting = false;
 
-        $this->forceDeleting = false;
-
-        return $deleted;
+            if ($deleted) {
+                $this->fireModelEvent('forceDeleted', false);
+            }
+        });
     }
 
     /**

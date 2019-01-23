@@ -5,6 +5,20 @@ namespace Illuminate\Contracts\Queue;
 interface Job
 {
     /**
+     * Get the job identifier.
+     *
+     * @return string
+     */
+    public function getJobId();
+
+    /**
+     * Get the decoded body of the job.
+     *
+     * @return array
+     */
+    public function payload();
+
+    /**
      * Fire the job.
      *
      * @return void
@@ -15,9 +29,16 @@ interface Job
      * Release the job back into the queue.
      *
      * @param  int   $delay
-     * @return mixed
+     * @return void
      */
     public function release($delay = 0);
+
+    /**
+     * Determine if the job was released back into the queue.
+     *
+     * @return bool
+     */
+    public function isReleased();
 
     /**
      * Delete the job from the queue.
@@ -46,6 +67,20 @@ interface Job
      * @return int
      */
     public function attempts();
+
+    /**
+     * Determine if the job has been marked as a failure.
+     *
+     * @return bool
+     */
+    public function hasFailed();
+
+    /**
+     * Mark the job as "failed".
+     *
+     * @return void
+     */
+    public function markAsFailed();
 
     /**
      * Process an exception that caused the job to fail.
