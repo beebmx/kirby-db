@@ -4,7 +4,7 @@
     "keywords": [
         "kirby", "kirby-3", "database", "model", "eloquent"
     ],
-    "version": "1.0.2",
+    "version": "1.0.3",
     "type": "kirby-plugin",
     "license": "MIT",
     "authors": [
@@ -15,8 +15,7 @@
     ],
     "require": {
         "php": "^7.1.3",
-        "composer/installers": "~1.0",
-        "getkirby/composer-installer": "*"
+        "getkirby/composer-installer": "^1.1"
     },
     "require-dev": {
         "illuminate/database": "^5.7"
@@ -24,7 +23,8 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "vendor-dir": "bundle/"
     },
     "autoload": {
         "files": [
