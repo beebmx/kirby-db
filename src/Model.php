@@ -14,6 +14,6 @@ class Model extends Eloquent
         if (!static::resolveDatabaseManagerInstance()) {
             static::autoloadDatabaseManager();
         }
-        parent::__construct($attributes = []);
+        parent::__construct($attributes);
     }
 }
