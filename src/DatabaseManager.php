@@ -18,7 +18,7 @@ class DatabaseManager
      * @param string $default
      * @param boolean $eloquent
      */
-    public function __construct($drivers = [], $default, $eloquent = false)
+    public function __construct($drivers = [], $default = null, $eloquent = false)
     {
         $this->db = new Capsule;
         $this->default = $default;
