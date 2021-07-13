@@ -14,17 +14,16 @@
         }
     ],
     "require": {
-        "php": "^7.1.3",
-        "getkirby/composer-installer": "^1.1"
+        "php": "^7.3|^8.0",,
+        "getkirby/composer-installer": "^1.2"
     },
     "require-dev": {
-        "illuminate/database": "^8.5"
+        "illuminate/database": "^8.0"
     },
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true,
-        "vendor-dir": "bundle/"
+        "sort-packages": true
     },
     "autoload": {
         "files": [
