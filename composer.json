@@ -31,7 +31,7 @@
             "config.php"
         ],
         "psr-4": {
-            "Beebmx\\": "src/"
+            "Beebmx\\KirbyDB\\": "src/"
         }
     },
     "minimum-stability": "dev"
