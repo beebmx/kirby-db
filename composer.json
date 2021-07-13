@@ -19,7 +19,7 @@
     },
     "require-dev": {
         "illuminate/database": "^8.0",
-        "spatie/laravel-translatable": "^5.0"
+        "spatie/laravel-translatable": "*"
     },
     "config": {
         "optimize-autoloader": true,
