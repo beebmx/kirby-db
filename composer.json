@@ -20,6 +20,14 @@
     "require-dev": {
         "illuminate/database": "^8.0"
     },
+    "scripts": {
+    	"update-cmd": [
+    		"composer update"
+    	],
+    	"post-install-cmd": [
+    		"@update-cmd"
+    	]
+    },
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
