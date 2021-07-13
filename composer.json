@@ -14,7 +14,7 @@
         }
     ],
     "require": {
-        "php": "^7.3|^8.0",,
+        "php": "^7.3|^8.0",
         "getkirby/composer-installer": "^1.2"
     },
     "require-dev": {
