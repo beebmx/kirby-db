@@ -18,7 +18,7 @@
         "getkirby/composer-installer": "^1.1"
     },
     "require-dev": {
-        "illuminate/database": "^7"
+        "illuminate/database": "^8"
     },
     "config": {
         "optimize-autoloader": true,
