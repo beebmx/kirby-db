@@ -35,5 +35,5 @@
             "Beebmx\\KirbyDB\\": "src/"
         }
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "stable"
 }
