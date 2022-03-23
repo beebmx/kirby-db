@@ -1,8 +1,8 @@
 <?php
 
-namespace Beebmx\KirbyDB;
+namespace Beebmx\KirbyDb;
 
-use Beebmx\KirbyDB\BootDatabase;
+use Beebmx\KirbyDb\Contracts\BootDatabase;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
 class Model extends Eloquent
@@ -13,7 +13,10 @@ class Model extends Eloquent
     {
         if (!static::resolveDatabaseManagerInstance()) {
             static::autoloadDatabaseManager();
+        } else {
+            static::setCapsuleInstance();
         }
+
         parent::__construct($attributes);
     }
 }

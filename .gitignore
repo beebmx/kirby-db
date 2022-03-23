@@ -1,4 +1,9 @@
 /.idea
 /kirby
+/vendor
+phpunit.xml
 composer.lock
 .DS_Store
+.php-cs-fixer.cache
+.phpunit.cache
+.phpunit.result.cache

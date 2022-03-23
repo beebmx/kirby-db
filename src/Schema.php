@@ -1,8 +1,8 @@
 <?php
 
-namespace Beebmx\KirbyDB;
+namespace Beebmx\KirbyDb;
 
-use Beebmx\KirbyDB\BootDatabase;
+use Beebmx\KirbyDb\Contracts\BootDatabase;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
 class Schema
@@ -20,7 +20,10 @@ class Schema
     {
         if (!static::resolveDatabaseManagerInstance()) {
             static::autoloadDatabaseManager();
+        } else {
+            static::setCapsuleInstance();
         }
+
         return Capsule::schema()->$method(...$args);
     }
 }

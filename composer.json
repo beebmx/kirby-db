@@ -4,7 +4,7 @@
     "keywords": [
         "kirby", "kirby-3", "database", "model", "eloquent"
     ],
-    "version": "1.0.4",
+    "version": "2.0.0",
     "type": "kirby-plugin",
     "license": "MIT",
     "authors": [
@@ -14,25 +14,37 @@
         }
     ],
     "require": {
-        "php": "^7.1.3",
-        "getkirby/composer-installer": "^1.1"
+        "php": "^8.0.2",
+        "getkirby/composer-installer": "^1.2",
+        "illuminate/database": "^9.0",
+        "illuminate/hashing": "^9.0"
     },
     "require-dev": {
-        "illuminate/database": "^5.7"
+        "getkirby/cms": "^3.6",
+        "phpunit/phpunit": "^9.5",
+        "spatie/ray": "^1.34"
     },
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true,
-        "vendor-dir": "bundle/"
-    },
-    "autoload": {
-        "files": [
-            "config.php"
-        ],
-        "psr-4": {
-            "Beebmx\\": "src/"
+        "allow-plugins": {
+            "getkirby/composer-installer": true
         }
     },
-    "minimum-stability": "dev"
+    "autoload": {
+        "psr-4": {
+            "Beebmx\\KirbyDb\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Beebmx\\KirbyDb\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "installer-name": "kirby-db"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

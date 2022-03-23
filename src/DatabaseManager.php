@@ -1,15 +1,18 @@
 <?php
 
-namespace Beebmx\KirbyDB;
+namespace Beebmx\KirbyDb;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 
 class DatabaseManager
 {
-    protected $db;
-    protected $default;
-    protected $drivers;
-    protected $eloquent;
+    protected Capsule $db;
+
+    protected string $default;
+
+    protected array $drivers;
+
+    protected bool $eloquent;
 
     /**
      * Constructor
@@ -18,7 +21,7 @@ class DatabaseManager
      * @param string $default
      * @param boolean $eloquent
      */
-    public function __construct($drivers = [], $default, $eloquent = false)
+    public function __construct(array $drivers, string $default, bool $eloquent = false)
     {
         $this->db = new Capsule;
         $this->default = $default;
@@ -26,6 +29,11 @@ class DatabaseManager
         $this->eloquent = $eloquent;
 
         $this->initialize();
+    }
+
+    public function getCapsule(): Capsule
+    {
+        return $this->db;
     }
 
     /**
