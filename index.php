@@ -2,7 +2,7 @@
 
 use Kirby\Cms\App as Kirby;
 
-@include_once __DIR__ . '/vendor/autoload.php';
+@include_once __DIR__.'/vendor/autoload.php';
 
 Kirby::plugin('beebmx/kirby-db', [
     'options' => [
@@ -10,6 +10,6 @@ Kirby::plugin('beebmx/kirby-db', [
         'drivers' => [
 
         ],
-        'eloquent' => false
+        'eloquent' => false,
     ],
 ]);

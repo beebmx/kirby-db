@@ -16,10 +16,6 @@ class DatabaseManager
 
     /**
      * Constructor
-     *
-     * @param array $drivers
-     * @param string $default
-     * @param boolean $eloquent
      */
     public function __construct(array $drivers, string $default, bool $eloquent = false)
     {
@@ -38,10 +34,8 @@ class DatabaseManager
 
     /**
      * Initialize options for DatabaseManager
-     *
-     * @return void
      */
-    protected function initialize()
+    protected function initialize(): void
     {
         $this->addConnections();
         $this->db->setAsGlobal();
@@ -53,10 +47,8 @@ class DatabaseManager
 
     /**
      * Add all the connections and set default connection
-     *
-     * @return void
      */
-    protected function addConnections()
+    protected function addConnections(): void
     {
         foreach ($this->drivers as $driver => $connection) {
             $this->db->addConnection($connection, $this->default === $driver ? 'default' : $driver);
@@ -65,10 +57,8 @@ class DatabaseManager
 
     /**
      * Boot Eloquent if it was required
-     *
-     * @return void
      */
-    protected function bootEloquent()
+    protected function bootEloquent(): void
     {
         $this->db->bootEloquent();
     }

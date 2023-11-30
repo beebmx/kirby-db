@@ -1,27 +1,28 @@
 {
     "name": "beebmx/kirby-db",
-    "description": "Enable Kirby 3 database support for Illuminate\\Database",
+    "description": "Enable Kirby 3 & 4 database support for Illuminate\\Database",
     "keywords": [
-        "kirby", "kirby-3", "database", "model", "eloquent"
+        "kirby", "kirby-3", "kirby-4", "database", "model", "eloquent"
     ],
-    "version": "2.0.0",
+    "version": "3.0.0",
     "type": "kirby-plugin",
     "license": "MIT",
     "authors": [
         {
             "name": "Fernando Gutierrez",
-            "email": "fernando@beeb.mx"
+            "homepage": "https://beeb.mx"
         }
     ],
     "require": {
-        "php": "^8.0.2",
+        "php": "^8.1",
         "getkirby/composer-installer": "^1.2",
-        "illuminate/database": "^9.0",
-        "illuminate/hashing": "^9.0"
+        "illuminate/database": "^10.0",
+        "illuminate/hashing": "^10.0"
     },
     "require-dev": {
-        "getkirby/cms": "^3.6",
-        "phpunit/phpunit": "^9.5",
+        "getkirby/cms": "^4.0",
+        "laravel/pint": "^1.13",
+        "phpunit/phpunit": "^10.1",
         "spatie/ray": "^1.34"
     },
     "config": {
@@ -42,8 +43,11 @@
             "Beebmx\\KirbyDb\\Tests\\": "tests/"
         }
     },
-    "extra": {
-        "installer-name": "kirby-db"
+    "scripts": {
+        "test": [
+            "php tests/fixHelpers.php",
+            "vendor/bin/phpunit"
+        ]
     },
     "minimum-stability": "dev",
     "prefer-stable": true

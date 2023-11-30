@@ -9,9 +9,12 @@ use Beebmx\KirbyDb\Tests\Fixtures\Models\User;
 use Beebmx\KirbyDb\Tests\TestCase;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Hashing\BcryptHasher;
+use Kirby\Cms\App;
 
 class ModelTest extends TestCase
 {
+    protected App $kirby;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -57,7 +60,7 @@ class ModelTest extends TestCase
         User::create([
             'name' => 'Friend Doe',
             'email' => 'friend@doe.co',
-            'password' => (new BcryptHasher)->make('password')
+            'password' => (new BcryptHasher)->make('password'),
         ]);
 
         $this->assertCount(4, User::all());
@@ -66,7 +69,7 @@ class ModelTest extends TestCase
     /** @test */
     public function it_can_create_a_resource_as_object()
     {
-        tap(new User, function($user) {
+        tap(new User, function ($user) {
             $user->name = 'Friend Doe';
             $user->email = 'friend@doe.co';
             $user->password = (new BcryptHasher)->make('password');
@@ -93,7 +96,7 @@ class ModelTest extends TestCase
     /** @test */
     public function it_can_update_a_resource_as_object()
     {
-        tap(User::find(1), function($user) {
+        tap(User::find(1), function ($user) {
             $user->name = 'Friend Doe';
             $user->email = 'friend@doe.co';
 
@@ -122,7 +125,7 @@ class ModelTest extends TestCase
     /** @test */
     public function it_can_delete_a_resource_as_object()
     {
-        tap(User::find(1), function($user) {
+        tap(User::find(1), function ($user) {
             $user->name = 'Friend Doe';
             $user->email = 'friend@doe.co';
 

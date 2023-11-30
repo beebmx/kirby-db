@@ -18,7 +18,7 @@ class Schema
      */
     public static function __callStatic($method, $args)
     {
-        if (!static::resolveDatabaseManagerInstance()) {
+        if (! static::resolveDatabaseManagerInstance()) {
             static::autoloadDatabaseManager();
         } else {
             static::setCapsuleInstance();

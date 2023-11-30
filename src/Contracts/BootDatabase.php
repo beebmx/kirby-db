@@ -34,8 +34,6 @@ trait BootDatabase
 
     /**
      * Check if an instance was created
-     *
-     * @return bool
      */
     protected static function resolveDatabaseManagerInstance(): bool
     {

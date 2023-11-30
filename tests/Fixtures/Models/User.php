@@ -3,6 +3,7 @@
 namespace Beebmx\KirbyDb\Tests\Fixtures\Models;
 
 use Beebmx\KirbyDb\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Model
@@ -11,7 +12,7 @@ class User extends Model
 
     protected $guarded = [];
 
-    public function posts()
+    public function posts(): HasMany
     {
         return $this->hasMany(Post::class);
     }

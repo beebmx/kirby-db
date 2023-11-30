@@ -11,7 +11,7 @@ class Model extends Eloquent
 
     public function __construct(array $attributes = [])
     {
-        if (!static::resolveDatabaseManagerInstance()) {
+        if (! static::resolveDatabaseManagerInstance()) {
             static::autoloadDatabaseManager();
         } else {
             static::setCapsuleInstance();

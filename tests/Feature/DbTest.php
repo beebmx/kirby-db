@@ -65,15 +65,14 @@ class DbTest extends TestCase
         DB::table('users')
             ->where('id', 1)
             ->update([
-            'name' => 'Jane Doe',
-            'email' => 'jane@doe.co',
-        ]);
+                'name' => 'Jane Doe',
+                'email' => 'jane@doe.co',
+            ]);
 
         $record = DB::table('users')->first();
         $this->assertEquals('Jane Doe', $record->name);
         $this->assertEquals('jane@doe.co', $record->email);
     }
-
 
     /** @test */
     public function it_can_delete_a_record()
