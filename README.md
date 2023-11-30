@@ -1,5 +1,10 @@
 # Kirby DB
 
+[![Latest Stable Version](https://poser.pugx.org/beebmx/kirby-db/v)](//packagist.org/packages/beebmx/kirby-db)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/beebmx/kirby-db/tests.yml?branch=main)
+[![Total Downloads](http://poser.pugx.org/beebmx/kirby-db/downloads)](https://packagist.org/packages/beebmx/kirby-db)
+[![License](https://poser.pugx.org/beebmx/kirby-db/license)](//packagist.org/packages/beebmx/kirby-db)
+
 Kirby DB use Laravel `illuminate/database` package and enable their features for Kirby.
 
 This package enable Laravel Query Builder, Laravel Eloquent ORM and Laravel Schema for your own Kirby applications.
