@@ -4,7 +4,7 @@
     "keywords": [
         "kirby", "kirby-3", "kirby-4", "database", "model", "eloquent"
     ],
-    "version": "3.0.0",
+    "version": "3.1.0",
     "type": "kirby-plugin",
     "license": "MIT",
     "authors": [
@@ -16,8 +16,8 @@
     "require": {
         "php": "^8.1",
         "getkirby/composer-installer": "^1.2",
-        "illuminate/database": "^10.0",
-        "illuminate/hashing": "^10.0"
+        "illuminate/database": "^10.0|^11.0",
+        "illuminate/hashing": "^10.0|^11.0"
     },
     "require-dev": {
         "getkirby/cms": "^4.0",
