@@ -11,7 +11,7 @@
         "kirby4",
         "kirby5"
     ],
-    "version": "4.0.0",
+    "version": "4.0.1",
     "type": "kirby-plugin",
     "license": "MIT",
     "authors": [

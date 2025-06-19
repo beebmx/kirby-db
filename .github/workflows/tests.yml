@@ -31,4 +31,4 @@ jobs:
       - name: Tests
         run: |
           php tests/fixHelpers.php
-          vendor/bin/phpunit
+          vendor/bin/pest
