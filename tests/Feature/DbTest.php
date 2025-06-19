@@ -1,101 +1,89 @@
 <?php
 
-namespace Beebmx\KirbyDb\Tests\Feature;
-
 use Beebmx\KirbyDb\DB;
 use Beebmx\KirbyDb\Schema;
-use Beebmx\KirbyDb\Tests\TestCase;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Hashing\BcryptHasher;
-use Kirby\Cms\App;
 
-class DbTest extends TestCase
-{
-    protected App $kirby;
+beforeEach(function () {
+    $this->kirby = App();
 
-    protected function setUp(): void
-    {
-        parent::setUp();
+    Schema::create('users', function (Blueprint $table) {
+        $table->id();
+        $table->string('name');
+        $table->string('email');
+        $table->string('password');
+        $table->timestamps();
+    });
+});
 
-        $this->kirby = $this->setDatabase();
+it('can returns the total of records', function () {
+    $users = DB::table('users')->get();
 
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email');
-            $table->string('password');
-            $table->timestamps();
-        });
-    }
+    expect($users)
+        ->not->toBeNull()
+        ->toHaveCount(0);
+});
 
-    /** @test */
-    public function it_can_returns_the_total_of_records()
-    {
-        $users = DB::table('users')->get();
+it('can insert a record', function () {
+    expect(DB::table('users')->get())->toHaveCount(0);
 
-        $this->assertNotNull($users);
-        $this->assertCount(0, $users);
-    }
+    DB::table('users')->insert([
+        'name' => 'John Doe',
+        'email' => 'john@doe.co',
+        'password' => (new BcryptHasher)->make('password'),
+    ]);
 
-    /** @test */
-    public function it_can_insert_a_record()
-    {
-        $this->assertCount(0, DB::table('users')->get());
+    expect(DB::table('users')->get())
+        ->toHaveCount(1);
+});
 
-        DB::table('users')->insert([
-            'name' => 'John Doe',
-            'email' => 'john@doe.co',
-            'password' => (new BcryptHasher)->make('password'),
+it('can update a record', function () {
+    DB::table('users')->insert([
+        'name' => 'John Doe',
+        'email' => 'john@doe.co',
+        'password' => (new BcryptHasher)->make('password'),
+    ]);
+    $record = DB::table('users')->first();
+
+    expect($record->name)
+        ->toEqual('John Doe');
+
+    DB::table('users')
+        ->where('id', 1)
+        ->update([
+            'name' => 'Jane Doe',
+            'email' => 'jane@doe.co',
         ]);
 
-        $this->assertCount(1, DB::table('users')->get());
+    $record = DB::table('users')->first();
+
+    expect($record->name)
+        ->toEqual('Jane Doe')
+        ->and($record->email)
+        ->toEqual('jane@doe.co');
+});
+
+it('can delete a record', function () {
+    DB::table('users')->insert([
+        'name' => 'John Doe',
+        'email' => 'john@doe.co',
+        'password' => (new BcryptHasher)->make('password'),
+    ]);
+
+    expect(DB::table('users')->get())
+        ->toHaveCount(1);
+
+    DB::table('users')
+        ->where('id', 1)
+        ->delete();
+
+    expect(DB::table('users')->get())
+        ->toHaveCount(0);
+});
+
+afterEach(function () {
+    if (Schema::hasTable('users')) {
+        Schema::drop('users');
     }
-
-    /** @test */
-    public function it_can_update_a_record()
-    {
-        DB::table('users')->insert([
-            'name' => 'John Doe',
-            'email' => 'john@doe.co',
-            'password' => (new BcryptHasher)->make('password'),
-        ]);
-        $record = DB::table('users')->first();
-        $this->assertEquals('John Doe', $record->name);
-
-        DB::table('users')
-            ->where('id', 1)
-            ->update([
-                'name' => 'Jane Doe',
-                'email' => 'jane@doe.co',
-            ]);
-
-        $record = DB::table('users')->first();
-        $this->assertEquals('Jane Doe', $record->name);
-        $this->assertEquals('jane@doe.co', $record->email);
-    }
-
-    /** @test */
-    public function it_can_delete_a_record()
-    {
-        DB::table('users')->insert([
-            'name' => 'John Doe',
-            'email' => 'john@doe.co',
-            'password' => (new BcryptHasher)->make('password'),
-        ]);
-        $this->assertCount(1, DB::table('users')->get());
-
-        DB::table('users')
-            ->where('id', 1)
-            ->delete();
-        $this->assertCount(0, DB::table('users')->get());
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        if (Schema::hasTable('users')) {
-            Schema::drop('users');
-        }
-    }
-}
+});

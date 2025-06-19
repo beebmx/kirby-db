@@ -1,194 +1,168 @@
 <?php
 
-namespace Beebmx\KirbyDb\Tests\Feature;
-
 use Beebmx\KirbyDb\DB;
 use Beebmx\KirbyDb\Schema;
-use Beebmx\KirbyDb\Tests\Fixtures\Models\Post;
-use Beebmx\KirbyDb\Tests\Fixtures\Models\User;
-use Beebmx\KirbyDb\Tests\TestCase;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Hashing\BcryptHasher;
-use Kirby\Cms\App;
+use Tests\Fixtures\Models\Post;
+use Tests\Fixtures\Models\User;
 
-class ModelTest extends TestCase
-{
-    protected App $kirby;
+beforeEach(function () {
+    $this->kirby = App();
 
-    protected function setUp(): void
-    {
-        parent::setUp();
+    Schema::create('users', function (Blueprint $table) {
+        $table->id();
+        $table->string('name');
+        $table->string('email');
+        $table->string('password');
+        $table->timestamps();
+        $table->softDeletes();
+    });
 
-        $this->kirby = $this->setDatabase();
+    Schema::create('posts', function (Blueprint $table) {
+        $table->id();
+        $table->foreignId('user_id');
+        $table->string('title');
+        $table->text('body');
+        $table->string('type')->nullable();
+        $table->timestamps();
+    });
 
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email');
-            $table->string('password');
-            $table->timestamps();
-            $table->softDeletes();
-        });
+    DB::table('users')->insert(['name' => 'John Doe', 'email' => 'john@doe.co', 'password' => (new BcryptHasher)->make('password')]);
+    DB::table('users')->insert(['name' => 'Jane Doe', 'email' => 'jane@doe.co', 'password' => (new BcryptHasher)->make('password')]);
+    DB::table('users')->insert(['name' => 'Other Doe', 'email' => 'other@doe.co', 'password' => (new BcryptHasher)->make('password')]);
+    DB::table('posts')->insert(['user_id' => 1, 'title' => 'Culpa commodo duis', 'body' => 'Sit duis sunt eiusmod duis anim veniam officia eu.', 'type' => 'news']);
+    DB::table('posts')->insert(['user_id' => 1, 'title' => 'Amet duis minim', 'body' => 'Non aute ea excepteur do ipsum aliquip aute velit sunt.', 'type' => 'info']);
+    DB::table('posts')->insert(['user_id' => 2, 'title' => 'Officia in deserunt', 'body' => 'Sint ipsum reprehenderit commodo enim id nostrud.', 'type' => 'news']);
+});
 
-        Schema::create('posts', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id');
-            $table->string('title');
-            $table->text('body');
-            $table->string('type')->nullable();
-            $table->timestamps();
-        });
+it('returns all the model resources', function () {
+    expect(User::all())
+        ->toHaveCount(3)
+        ->and(User::get())
+        ->toHaveCount(3);
+});
 
-        DB::table('users')->insert(['name' => 'John Doe', 'email' => 'john@doe.co', 'password' => (new BcryptHasher)->make('password')]);
-        DB::table('users')->insert(['name' => 'Jane Doe', 'email' => 'jane@doe.co', 'password' => (new BcryptHasher)->make('password')]);
-        DB::table('users')->insert(['name' => 'Other Doe', 'email' => 'other@doe.co', 'password' => (new BcryptHasher)->make('password')]);
-        DB::table('posts')->insert(['user_id' => 1, 'title' => 'Culpa commodo duis', 'body' => 'Sit duis sunt eiusmod duis anim veniam officia eu.', 'type' => 'news']);
-        DB::table('posts')->insert(['user_id' => 1, 'title' => 'Amet duis minim', 'body' => 'Non aute ea excepteur do ipsum aliquip aute velit sunt.', 'type' => 'info']);
-        DB::table('posts')->insert(['user_id' => 2, 'title' => 'Officia in deserunt', 'body' => 'Sint ipsum reprehenderit commodo enim id nostrud.', 'type' => 'news']);
-    }
+it('can create a resource', function () {
+    User::create([
+        'name' => 'Friend Doe',
+        'email' => 'friend@doe.co',
+        'password' => (new BcryptHasher)->make('password'),
+    ]);
 
-    /** @test */
-    public function it_returns_all_the_model_resources()
-    {
-        $this->assertCount(3, User::all());
-        $this->assertCount(3, User::get());
-    }
+    expect(User::all())->toHaveCount(4);
+});
 
-    /** @test */
-    public function it_can_create_a_resource()
-    {
-        User::create([
+it('can create a resource as object', function () {
+    tap(new User, function ($user) {
+        $user->name = 'Friend Doe';
+        $user->email = 'friend@doe.co';
+        $user->password = (new BcryptHasher)->make('password');
+
+        $user->save();
+    });
+
+    expect(User::all())
+        ->toHaveCount(4);
+});
+
+it('can update a resource', function () {
+    User::query()
+        ->where('id', 1)
+        ->update([
             'name' => 'Friend Doe',
             'email' => 'friend@doe.co',
-            'password' => (new BcryptHasher)->make('password'),
         ]);
 
-        $this->assertCount(4, User::all());
+    expect(User::find(1)->name)
+        ->toEqual('Friend Doe');
+});
+
+it('can update a resource as object', function () {
+    tap(User::find(1), function ($user) {
+        $user->name = 'Friend Doe';
+        $user->email = 'friend@doe.co';
+
+        $user->save();
+    });
+
+    expect(User::find(1)->name)
+        ->toEqual('Friend Doe');
+});
+
+it('can delete a resource', function () {
+    User::where('id', 1)->delete();
+
+    expect(User::all())
+        ->toHaveCount(2);
+});
+
+it('can destroy a resource', function () {
+    User::destroy([1, 2]);
+
+    expect(User::all())
+        ->toHaveCount(1);
+});
+
+it('can delete a resource as object', function () {
+    tap(User::find(1), function ($user) {
+        $user->name = 'Friend Doe';
+        $user->email = 'friend@doe.co';
+
+        $user->delete();
+    });
+
+    expect(User::all())
+        ->toHaveCount(2);
+});
+
+it('can use softdeletes', function () {
+    User::where('id', 1)->delete();
+
+    expect(User::all())
+        ->toHaveCount(2)
+        ->and(DB::table('users')->get())
+        ->toHaveCount(3);
+});
+
+it('can load has many relation', function () {
+    $user = User::with('posts')->find(1);
+
+    expect($user->posts)
+        ->toHaveCount(2);
+});
+
+it('can load belongs to relation', function () {
+    $post = Post::with('user')->find(1);
+
+    expect($post->user->name)
+        ->toEqual('John Doe');
+});
+
+it('can create a resource from relationship', function () {
+    expect(Post::where('user_id', 2)->get())->toHaveCount(1);
+
+    $user = User::find(2);
+
+    $user->posts()->create([
+        'title' => 'Proident deserunt dolore',
+        'body' => 'Cupidatat culpa nisi mollit fugiat dolore officia officia.',
+    ]);
+
+    expect(User::with('posts')->find(2)->posts)
+        ->toHaveCount(2);
+});
+
+it('returns resources from scope', function () {
+    expect(Post::news()->get())
+        ->toHaveCount(2)
+        ->and(Post::info()->get())
+        ->toHaveCount(1);
+});
+
+afterEach(function () {
+    if (Schema::hasTable('users') || Schema::hasTable('posts')) {
+        Schema::drop('users');
+        Schema::drop('posts');
     }
-
-    /** @test */
-    public function it_can_create_a_resource_as_object()
-    {
-        tap(new User, function ($user) {
-            $user->name = 'Friend Doe';
-            $user->email = 'friend@doe.co';
-            $user->password = (new BcryptHasher)->make('password');
-
-            $user->save();
-        });
-
-        $this->assertCount(4, User::all());
-    }
-
-    /** @test */
-    public function it_can_update_a_resource()
-    {
-        User::query()
-            ->where('id', 1)
-            ->update([
-                'name' => 'Friend Doe',
-                'email' => 'friend@doe.co',
-            ]);
-
-        $this->assertEquals('Friend Doe', User::find(1)->name);
-    }
-
-    /** @test */
-    public function it_can_update_a_resource_as_object()
-    {
-        tap(User::find(1), function ($user) {
-            $user->name = 'Friend Doe';
-            $user->email = 'friend@doe.co';
-
-            $user->save();
-        });
-
-        $this->assertEquals('Friend Doe', User::find(1)->name);
-    }
-
-    /** @test */
-    public function it_can_delete_a_resource()
-    {
-        User::where('id', 1)->delete();
-
-        $this->assertCount(2, User::all());
-    }
-
-    /** @test */
-    public function it_can_destroy_a_resource()
-    {
-        User::destroy([1, 2]);
-
-        $this->assertCount(1, User::all());
-    }
-
-    /** @test */
-    public function it_can_delete_a_resource_as_object()
-    {
-        tap(User::find(1), function ($user) {
-            $user->name = 'Friend Doe';
-            $user->email = 'friend@doe.co';
-
-            $user->delete();
-        });
-
-        $this->assertCount(2, User::all());
-    }
-
-    /** @test */
-    public function it_can_use_softdeletes()
-    {
-        User::where('id', 1)->delete();
-
-        $this->assertCount(2, User::all());
-        $this->assertCount(3, DB::table('users')->get());
-    }
-
-    /** @test */
-    public function it_can_load_hasMany_relation()
-    {
-        $user = User::with('posts')->find(1);
-
-        $this->assertCount(2, $user->posts);
-    }
-
-    /** @test */
-    public function it_can_load_belongsTo_relation()
-    {
-        $post = Post::with('user')->find(1);
-
-        $this->assertEquals('John Doe', $post->user->name);
-    }
-
-    /** @test */
-    public function it_can_create_a_resource_from_relationship()
-    {
-        $this->assertCount(1, Post::where('user_id', 2)->get());
-
-        $user = User::find(2);
-
-        $user->posts()->create([
-            'title' => 'Proident deserunt dolore',
-            'body' => 'Cupidatat culpa nisi mollit fugiat dolore officia officia.',
-        ]);
-
-        $this->assertCount(2, User::with('posts')->find(2)->posts);
-    }
-
-    /** @test */
-    public function it_returns_resources_from_scope()
-    {
-        $this->assertCount(2, Post::news()->get());
-        $this->assertCount(1, Post::info()->get());
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        if (Schema::hasTable('users') || Schema::hasTable('posts')) {
-            Schema::drop('users');
-            Schema::drop('posts');
-        }
-    }
-}
+});

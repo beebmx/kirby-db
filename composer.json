@@ -1,10 +1,17 @@
 {
     "name": "beebmx/kirby-db",
-    "description": "Enable Kirby 3 & 4 database support for Illuminate\\Database",
+    "description": "Enable database support for Illuminate\\Database in Kirby 3, 4, 5",
     "keywords": [
-        "kirby", "kirby-3", "kirby-4", "database", "model", "eloquent"
+        "database",
+        "model",
+        "eloquent",
+        "kirby",
+        "kirby-plugin",
+        "kirby3",
+        "kirby4",
+        "kirby5"
     ],
-    "version": "3.1.0",
+    "version": "4.0.0",
     "type": "kirby-plugin",
     "license": "MIT",
     "authors": [
@@ -14,23 +21,24 @@
         }
     ],
     "require": {
-        "php": "^8.1",
+        "php": "^8.2",
         "getkirby/composer-installer": "^1.2",
-        "illuminate/database": "^10.0|^11.0",
-        "illuminate/hashing": "^10.0|^11.0"
+        "illuminate/database": "^10.0|^11.0|^12.0",
+        "illuminate/hashing": "^10.0|^11.0|^12.0"
     },
     "require-dev": {
-        "getkirby/cms": "^4.0",
-        "laravel/pint": "^1.13",
-        "phpunit/phpunit": "^10.1",
-        "spatie/ray": "^1.34"
+        "getkirby/cms": "^4.0|^5.0",
+        "laravel/pint": "^1.10",
+        "pestphp/pest": "^3.0",
+        "spatie/ray": "^1.0"
     },
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
-            "getkirby/composer-installer": true
+            "getkirby/composer-installer": true,
+            "pestphp/pest-plugin": true
         }
     },
     "autoload": {
@@ -40,14 +48,17 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Beebmx\\KirbyDb\\Tests\\": "tests/"
+            "Tests\\": "tests/"
         }
     },
     "scripts": {
         "test": [
             "php tests/fixHelpers.php",
-            "vendor/bin/phpunit"
+            "vendor/bin/pest"
         ]
+    },
+    "extra": {
+        "kirby-cms-path": false
     },
     "minimum-stability": "dev",
     "prefer-stable": true

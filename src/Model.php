@@ -3,9 +3,9 @@
 namespace Beebmx\KirbyDb;
 
 use Beebmx\KirbyDb\Contracts\BootDatabase;
-use Illuminate\Database\Eloquent\Model as Eloquent;
+use Illuminate\Database\Eloquent\Model as EloquentModel;
 
-class Model extends Eloquent
+class Model extends EloquentModel
 {
     use BootDatabase;
 

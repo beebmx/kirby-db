@@ -1,6 +1,6 @@
 <?php
 
-namespace Beebmx\KirbyDb\Tests\Fixtures\Models;
+namespace Tests\Fixtures\Models;
 
 use Beebmx\KirbyDb\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;

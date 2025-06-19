@@ -15,10 +15,8 @@ trait BootDatabase
 
     /**
      * Creates a new instance of DatabaseManager
-     *
-     * @return void
      */
-    protected static function autoloadDatabaseManager()
+    protected static function autoloadDatabaseManager(): void
     {
         static::$instance = (new DatabaseManager(
             Kirby::instance()->option('beebmx.kirby-db.drivers'),
@@ -27,7 +25,7 @@ trait BootDatabase
         ))->getCapsule();
     }
 
-    protected static function setCapsuleInstance()
+    protected static function setCapsuleInstance(): void
     {
         static::$instance = static::getFirstCapsuleInstance();
     }

@@ -1,52 +1,37 @@
 <?php
 
-namespace Beebmx\KirbyDb\Tests\Feature;
-
 use Beebmx\KirbyDb\Schema;
-use Beebmx\KirbyDb\Tests\TestCase;
 use Illuminate\Database\Schema\Blueprint;
-use Kirby\Cms\App;
 
-class SchemaTest extends TestCase
-{
-    protected App $kirby;
+beforeEach(function () {
+    $this->kirby = App(eloquent: false);
 
-    protected function setUp(): void
-    {
-        parent::setUp();
+    Schema::create('users', function (Blueprint $table) {
+        $table->id();
+        $table->string('name');
+        $table->string('email');
+        $table->string('password');
+        $table->timestamps();
+    });
+});
 
-        $this->kirby = $this->setDatabase($eloquent = false);
+it('can create a table', function () {
+    expect(Schema::hasTable('users'))
+        ->toBeTrue();
+});
 
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email');
-            $table->string('password');
-            $table->timestamps();
-        });
-    }
+it('can delete a table', function () {
+    expect(Schema::hasTable('users'))
+        ->toBeTrue();
 
-    /** @test */
-    public function it_can_create_a_table()
-    {
-        $this->assertTrue(Schema::hasTable('users'));
-    }
+    Schema::drop('users');
 
-    /** @test */
-    public function it_can_delete_a_table()
-    {
-        $this->assertTrue(Schema::hasTable('users'));
+    expect(Schema::hasTable('users'))
+        ->toBeFalse();
+});
 
+afterEach(function () {
+    if (Schema::hasTable('users')) {
         Schema::drop('users');
-        $this->assertFalse(Schema::hasTable('users'));
     }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        if (Schema::hasTable('users')) {
-            Schema::drop('users');
-        }
-    }
-}
+});
