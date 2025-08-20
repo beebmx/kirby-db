@@ -1,6 +1,6 @@
 {
     "name": "beebmx/kirby-db",
-    "description": "Enable database support for Illuminate\\Database in Kirby 3, 4, 5",
+    "description": "Enable database support for Illuminate\\Database in Kirby",
     "keywords": [
         "database",
         "model",
@@ -11,7 +11,7 @@
         "kirby4",
         "kirby5"
     ],
-    "version": "4.0.1",
+    "version": "4.1.0",
     "type": "kirby-plugin",
     "license": "MIT",
     "authors": [

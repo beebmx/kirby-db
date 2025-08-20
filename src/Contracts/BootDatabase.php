@@ -19,9 +19,9 @@ trait BootDatabase
     protected static function autoloadDatabaseManager(): void
     {
         static::$instance = (new DatabaseManager(
-            Kirby::instance()->option('beebmx.kirby-db.drivers'),
-            Kirby::instance()->option('beebmx.kirby-db.default'),
-            Kirby::instance()->option('beebmx.kirby-db.eloquent')
+            Kirby::instance()->option('beebmx.db.drivers'),
+            Kirby::instance()->option('beebmx.db.default'),
+            Kirby::instance()->option('beebmx.db.eloquent')
         ))->getCapsule();
     }
 

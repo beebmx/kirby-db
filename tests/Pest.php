@@ -36,7 +36,7 @@ function App(bool $eloquent = true, array $options = []): Kirby
             'base' => $base = dirname(__DIR__),
         ],
         'options' => [
-            'beebmx.kirby-db' => array_merge(
+            'beebmx.db' => array_merge(
                 require dirname(__DIR__).'/extensions/options.php',
                 [
                     'eloquent' => $eloquent,

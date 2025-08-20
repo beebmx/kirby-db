@@ -1,11 +1,11 @@
-# Kirby DB
+# Database for Kirby
 
 [![Latest Stable Version](https://poser.pugx.org/beebmx/kirby-db/v)](//packagist.org/packages/beebmx/kirby-db)
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/beebmx/kirby-db/tests.yml?branch=main)
 [![Total Downloads](http://poser.pugx.org/beebmx/kirby-db/downloads)](https://packagist.org/packages/beebmx/kirby-db)
 [![License](https://poser.pugx.org/beebmx/kirby-db/license)](//packagist.org/packages/beebmx/kirby-db)
 
-Kirby DB use Laravel `illuminate/database` package and enable their features for Kirby.
+`Database` use Laravel `illuminate/database` package and enable their features for Kirby.
 
 This package enable Laravel Query Builder, Laravel Eloquent ORM and Laravel Schema for your own Kirby applications.
 
@@ -24,7 +24,7 @@ First you need to set your database in your `config/config.php` file:
 ```php
 <?php
 return [
-    'beebmx.kirby-db.drivers' => [
+    'beebmx.db.drivers' => [
         'sqlite' => [
             'driver' => 'sqlite',
             'database' => 'storage/database/database.sqlite',
@@ -70,11 +70,14 @@ All the documentation about Eloquent ORM is in the [official documentation](http
 
 The default values of the package are:
 
-| Option | Default | Values | Description |
-|:--|:--|:--|:--|
-| beebmx.kirby-db.default | sqlite | `mysql` / `sqlite` / `pgsql` / `sqlsrv` | Default driver |
-| beebmx.kirby-db.drivers | [] | (array) | Array with all the drivers available |
-| beebmx.kirby-db.eloquent | false | `true` / `false` | Enable Eloquent ORM |
+| Option             | Default | Values                                  | Description                          |
+|:-------------------|:--------|:----------------------------------------|:-------------------------------------|
+| beebmx.db.default  | sqlite  | `mysql` / `sqlite` / `pgsql` / `sqlsrv` | Default driver                       |
+| beebmx.db.drivers  | []      | (array)                                 | Array with all the drivers available |
+| beebmx.db.eloquent | false   | `true` / `false`                        | Enable Eloquent ORM                  |
+
+> [!WARNING]
+> Since version `4.1.0`, `Database` changes the plugin prefix from `beebmx.kirby-db` to `beebmx.db`.
 
 ## Driver Examples
 
@@ -82,7 +85,7 @@ This is an example of the drivers available:
 
 ```php
 return [
-    'beebmx.kirby-db.drivers' => [
+    'beebmx.db.drivers' => [
         'sqlite' => [
             'driver' => 'sqlite',
             'database' => 'storage/database/database.sqlite',
@@ -130,4 +133,4 @@ return [
 
 ## Usage note
 
-You can use [Kirby Env](https://github.com/beebmx/kirby-env) to hide your credentials from your code.
+You can use [Env](https://github.com/beebmx/kirby-env) to hide your credentials from your code.
