@@ -4,25 +4,22 @@ namespace Beebmx\KirbyDb;
 
 use Beebmx\KirbyDb\Contracts\BootDatabase;
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Illuminate\Database\Schema\Builder;
 
+/**
+ * @mixin Builder
+ */
 class Schema
 {
     use BootDatabase;
 
     /**
-     * Returns a new Illuminate\Database\Capsule\Manager Object
-     *
-     * @param [type] $method
-     * @param [type] $args
-     * @return Illuminate\Database\Capsule\Manager::class
+     * Forwards the call to the Illuminate\Database\Schema\Builder
+     * of the default connection, for example `Schema::create('users', ...)`
      */
-    public static function __callStatic($method, $args)
+    public static function __callStatic(string $method, array $args): mixed
     {
-        if (! static::resolveDatabaseManagerInstance()) {
-            static::autoloadDatabaseManager();
-        } else {
-            static::setCapsuleInstance();
-        }
+        static::bootDatabase();
 
         return Capsule::schema()->$method(...$args);
     }

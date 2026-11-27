@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'default' => 'sqlite',
+    'default' => null,
     'drivers' => [
         'sqlite' => [
             'driver' => 'sqlite',
@@ -45,5 +45,4 @@ return [
             'prefix' => '',
         ],
     ],
-    'eloquent' => false,
 ];

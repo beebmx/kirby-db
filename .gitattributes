@@ -6,6 +6,8 @@
 # Tests
 /tests export-ignore
 phpunit.xml.dist export-ignore
+phpunit.dist.xml export-ignore
+pint.json export-ignore
 
 # Others
 .editorconfig export-ignore

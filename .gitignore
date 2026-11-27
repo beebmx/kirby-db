@@ -7,3 +7,7 @@ composer.lock
 .php-cs-fixer.cache
 .phpunit.cache
 .phpunit.result.cache
+
+# Testing fixtures
+/tests/Fixtures/site/plugins
+/tests/Fixtures/cache

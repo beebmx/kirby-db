@@ -1,11 +1,12 @@
 <?php
 
 beforeEach(function () {
-    $this->kirby = App(eloquent: false);
+    $this->kirby = KirbyInstance();
 });
 
 it('loads the configuration', function () {
-    expect($this->kirby->option('beebmx.db.default'))->toEqual('sqlite');
+    expect($this->kirby->option('beebmx.db.default'))->toBeNull()
+        ->and($this->kirby->option('beebmx.db.drivers'))->toHaveKey('sqlite');
 });
 
 it('has driver configuration', function () {

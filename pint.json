@@ -1,5 +1,7 @@
 {
   "exclude": [
-    "kirby"
+    "kirby",
+    "tests/Fixtures/cache",
+    "tests/Fixtures/site/plugins"
   ]
 }

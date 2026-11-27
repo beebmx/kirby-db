@@ -3,60 +3,24 @@
 namespace Beebmx\KirbyDb\Contracts;
 
 use Beebmx\KirbyDb\DatabaseManager;
-use Beebmx\KirbyDb\DB;
-use Beebmx\KirbyDb\Model;
-use Beebmx\KirbyDb\Schema;
 use Illuminate\Database\Capsule\Manager as Capsule;
-use Kirby\Cms\App as Kirby;
 
 trait BootDatabase
 {
-    protected static $instance;
-
     /**
-     * Creates a new instance of DatabaseManager
+     * Creates the database connections from the Kirby options
+     * and boots Eloquent, only once
      */
-    protected static function autoloadDatabaseManager(): void
+    protected static function bootDatabase(): DatabaseManager
     {
-        static::$instance = (new DatabaseManager(
-            Kirby::instance()->option('beebmx.db.drivers'),
-            Kirby::instance()->option('beebmx.db.default'),
-            Kirby::instance()->option('beebmx.db.eloquent')
-        ))->getCapsule();
-    }
-
-    protected static function setCapsuleInstance(): void
-    {
-        static::$instance = static::getFirstCapsuleInstance();
+        return DatabaseManager::boot();
     }
 
     /**
-     * Check if an instance was created
+     * Returns the Capsule of the database connections, if they were created
      */
-    protected static function resolveDatabaseManagerInstance(): bool
-    {
-        return static::getFirstCapsuleInstance() instanceof Capsule;
-    }
-
-    protected static function getFirstCapsuleInstance(): ?Capsule
-    {
-        if (Schema::getCapsuleInstance()) {
-            return Schema::getCapsuleInstance();
-        }
-
-        if (DB::getCapsuleInstance()) {
-            return DB::getCapsuleInstance();
-        }
-
-        if (Model::getCapsuleInstance()) {
-            return Model::getCapsuleInstance();
-        }
-
-        return null;
-    }
-
     public static function getCapsuleInstance(): ?Capsule
     {
-        return static::$instance;
+        return DatabaseManager::instance()?->getCapsule();
     }
 }
