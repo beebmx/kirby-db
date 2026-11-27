@@ -9,14 +9,24 @@ class Model extends EloquentModel
 {
     use BootDatabase;
 
+    /**
+     * Boots the database and Eloquent before the model
+     */
     public function __construct(array $attributes = [])
     {
-        if (! static::resolveDatabaseManagerInstance()) {
-            static::autoloadDatabaseManager();
-        } else {
-            static::setCapsuleInstance();
-        }
+        static::bootDatabase();
 
         parent::__construct($attributes);
+    }
+
+    /**
+     * Boots the database and Eloquent before registering a model event,
+     * so `User::creating(...)` and observers work before the first query
+     */
+    protected static function registerModelEvent($event, $callback)
+    {
+        static::bootDatabase();
+
+        parent::registerModelEvent($event, $callback);
     }
 }

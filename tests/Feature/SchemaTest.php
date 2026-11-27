@@ -4,7 +4,7 @@ use Beebmx\KirbyDb\Schema;
 use Illuminate\Database\Schema\Blueprint;
 
 beforeEach(function () {
-    $this->kirby = App(eloquent: false);
+    $this->kirby = KirbyInstance();
 
     Schema::create('users', function (Blueprint $table) {
         $table->id();

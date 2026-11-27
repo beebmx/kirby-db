@@ -6,7 +6,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Hashing\BcryptHasher;
 
 beforeEach(function () {
-    $this->kirby = App();
+    $this->kirby = KirbyInstance();
 
     Schema::create('users', function (Blueprint $table) {
         $table->id();
@@ -31,7 +31,7 @@ it('can insert a record', function () {
     DB::table('users')->insert([
         'name' => 'John Doe',
         'email' => 'john@doe.co',
-        'password' => (new BcryptHasher)->make('password'),
+        'password' => (new BcryptHasher(['rounds' => 4]))->make('password'),
     ]);
 
     expect(DB::table('users')->get())
@@ -42,7 +42,7 @@ it('can update a record', function () {
     DB::table('users')->insert([
         'name' => 'John Doe',
         'email' => 'john@doe.co',
-        'password' => (new BcryptHasher)->make('password'),
+        'password' => (new BcryptHasher(['rounds' => 4]))->make('password'),
     ]);
     $record = DB::table('users')->first();
 
@@ -68,7 +68,7 @@ it('can delete a record', function () {
     DB::table('users')->insert([
         'name' => 'John Doe',
         'email' => 'john@doe.co',
-        'password' => (new BcryptHasher)->make('password'),
+        'password' => (new BcryptHasher(['rounds' => 4]))->make('password'),
     ]);
 
     expect(DB::table('users')->get())

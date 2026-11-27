@@ -8,7 +8,7 @@ use Tests\Fixtures\Models\Post;
 use Tests\Fixtures\Models\User;
 
 beforeEach(function () {
-    $this->kirby = App();
+    $this->kirby = KirbyInstance();
 
     Schema::create('users', function (Blueprint $table) {
         $table->id();
@@ -28,9 +28,9 @@ beforeEach(function () {
         $table->timestamps();
     });
 
-    DB::table('users')->insert(['name' => 'John Doe', 'email' => 'john@doe.co', 'password' => (new BcryptHasher)->make('password')]);
-    DB::table('users')->insert(['name' => 'Jane Doe', 'email' => 'jane@doe.co', 'password' => (new BcryptHasher)->make('password')]);
-    DB::table('users')->insert(['name' => 'Other Doe', 'email' => 'other@doe.co', 'password' => (new BcryptHasher)->make('password')]);
+    DB::table('users')->insert(['name' => 'John Doe', 'email' => 'john@doe.co', 'password' => (new BcryptHasher(['rounds' => 4]))->make('password')]);
+    DB::table('users')->insert(['name' => 'Jane Doe', 'email' => 'jane@doe.co', 'password' => (new BcryptHasher(['rounds' => 4]))->make('password')]);
+    DB::table('users')->insert(['name' => 'Other Doe', 'email' => 'other@doe.co', 'password' => (new BcryptHasher(['rounds' => 4]))->make('password')]);
     DB::table('posts')->insert(['user_id' => 1, 'title' => 'Culpa commodo duis', 'body' => 'Sit duis sunt eiusmod duis anim veniam officia eu.', 'type' => 'news']);
     DB::table('posts')->insert(['user_id' => 1, 'title' => 'Amet duis minim', 'body' => 'Non aute ea excepteur do ipsum aliquip aute velit sunt.', 'type' => 'info']);
     DB::table('posts')->insert(['user_id' => 2, 'title' => 'Officia in deserunt', 'body' => 'Sint ipsum reprehenderit commodo enim id nostrud.', 'type' => 'news']);
@@ -47,7 +47,7 @@ it('can create a resource', function () {
     User::create([
         'name' => 'Friend Doe',
         'email' => 'friend@doe.co',
-        'password' => (new BcryptHasher)->make('password'),
+        'password' => (new BcryptHasher(['rounds' => 4]))->make('password'),
     ]);
 
     expect(User::all())->toHaveCount(4);
@@ -57,7 +57,7 @@ it('can create a resource as object', function () {
     tap(new User, function ($user) {
         $user->name = 'Friend Doe';
         $user->email = 'friend@doe.co';
-        $user->password = (new BcryptHasher)->make('password');
+        $user->password = (new BcryptHasher(['rounds' => 4]))->make('password');
 
         $user->save();
     });
