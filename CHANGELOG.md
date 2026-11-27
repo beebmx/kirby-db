@@ -2,6 +2,10 @@
 
 All notable changes to `Database` will be documented in this file.
 
+## 5.0.1 - 2026-11-27
+
+- Republished 5.0.0 with its release notes in the commit message; there are no code changes from 5.0.0
+
 ## 5.0.0 - 2026-11-27
 
 - Added support for Kirby 6, keeping Kirby 4 and 5 support (`extra.kirby.compatible` is `^4.0 || ^5.0 || ^6.0`)
